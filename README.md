@@ -8,11 +8,20 @@ SERIAL PORT VERSION
 
 INI file has to go into c:\Windows folder to work in TSW2. Set the com port in the INI file to connect to your Arduino (Test code included)
 
-Arduino sends the string 'Output: xxx xxx xxx xxx xxx xxx xxx' xxx is the output to each analog channel that the Raildriver outputs. Each output has to be 3 characters to keep the string length consistant. As you can see in the Arduino code I have added padding for numbers under 10 and under 100 that require it.
+Arduino sends the string 'Output: xxx xxx xxx xxx xxx xxx xxx bbb bbb bbb bbb bbb bbb' xxx is the output to each analog channel that the Raildriver outputs. bbb is the output for the buttons. Each output has to be 3 characters to keep the string length consistant. As you can see in the Arduino code I have added padding for numbers under 10 and under 100 that require it.
 
 The 7 channels output are in the order Reverser, Throttle, Auto Brake, Independent Brake, Bail Off, Top Rotary Switch, Bottom Rotary Switch. These are 8 bit channels (0 - 255)
 
-I haven't implemented any of the buttons yet. 
+Button data is now included. The follow bytes are for the buttons...
+
+Byte  9 - Buttons  0 -  7
+Byte 10 - Buttons  8 - 15
+Byte 10 - Buttons 16 - 23
+Byte 10 - Buttons 24 - 31
+Byte 10 - Buttons 32 - 39
+Byte 10 - Buttons 40 - 43
+
+I haven't tested or impleted the buttons yet but the data should work.
 
 I have had the speed output working but didn't find it useful enough for my case.
 
@@ -32,6 +41,14 @@ Put INI file into C:\Windows folder. Edit Port to the com port of your Arduino. 
 On my installation the folder is...
 C:\SteamLibrary\steamapps\common\Train Sim World 2\WindowsNoEditor\TS2Prototype\Binaries\ThirdParty\PieHid\Binaries
 
+
+SERIAL VERSION HISTORY
+
+1.0.0.3    Updated to include buttons using the 6 bytes that contain button presses. Modified serial port code to make it more efficient with a faster refresh rate.
+
+1.0.0.2    Added INI file for setting serial port. Keep in the format COM1 COM2 COM3 etc.
+
+1.0.0.1    First Version - Only works on COM3
 
 
 
@@ -62,17 +79,6 @@ C:\SteamLibrary\steamapps\common\Train Sim World 2\WindowsNoEditor\TS2Prototype\
 Custom XInput controller with Arduino Leonardo: I have tested this with the XInput library and have been sucessful. Follow the intructions for using XInput once the Arduino XInput Library has been installed.
 
 
-
-
-
-
-
-VERSION HISTORY
-
-1.0.0.3    Updated to include buttons using the 6 bytes that contain button presses. Modified serial port code to make it more efficient with a faster refresh rate.
+XINPUT VERSION HISTORY
 
 2.0.0.1    XInput Version - Allows XInput controller to be used to supply TSW2 with data. Use a program like x360ce to map your controllers, throttles etc.
-
-1.0.0.2    Added INI file for setting serial port. Keep in the format COM1 COM2 COM3 etc.
-
-1.0.0.1    First Version - Only works on COM3
